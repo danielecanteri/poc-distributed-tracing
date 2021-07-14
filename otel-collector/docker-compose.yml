@@ -1,0 +1,12 @@
+version: "3.9"
+services: 
+    otel-collector:
+        image: 'otel/opentelemetry-collector:0.28.0'
+        volumes:
+            - ./config.yaml:/etc/otel/config.yaml
+        ports:
+            - 13133:13133 # health_check extension
+            - 55678:55678       # OpenCensus receiver
+            - 8989:8989       # Prometheus exporter
+            - 4317:4317   # otlp receiver
+    
