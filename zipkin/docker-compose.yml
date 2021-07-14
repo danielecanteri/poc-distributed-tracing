@@ -1,0 +1,7 @@
+version: "3.9"
+services: 
+    otel-collector:
+        image: 'openzipkin/zipkin:2.23'
+        ports:
+            - 9411:9411 # ui
+    
