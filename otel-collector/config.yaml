@@ -13,6 +13,12 @@ receivers:
 
 processors:
   batch:
+  span:
+    include:
+      match_type: strict
+      span_names: ["WebMVCTracingFilter.doFilterInternal"]
+    name:
+      from_attributes: ["http.url"]
 
 exporters:
   opencensus/skywalking:
@@ -42,7 +48,7 @@ service:
 #      exporters: [logging, opencensus/skywalking, prometheus]
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [batch, span]
       exporters: [jaeger, zipkin, zipkin/skywalking]
 #      exporters: [jaeger, zipkin, zipkin/skywalking]
 #      exporters: [logging, opencensus/skywalking, zipkin]
