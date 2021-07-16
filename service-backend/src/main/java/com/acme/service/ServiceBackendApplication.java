@@ -32,26 +32,6 @@ public class ServiceBackendApplication {
 		SpringApplication.run(ServiceBackendApplication.class, args);
 	}
 
-/*	@Bean
-	public OpenTelemetry openTelemetry(
-			SamplerProperties samplerProperties,
-			ObjectProvider<List<SpanExporter>> spanExportersProvider) {
-		SdkTracerProviderBuilder tracerProviderBuilder = SdkTracerProvider.builder();
-
-		spanExportersProvider.getIfAvailable(Collections::emptyList).stream()
-				.map(SimpleSpanProcessor::create)
-				.forEach(tracerProviderBuilder::addSpanProcessor);
-
-		SdkTracerProvider tracerProvider =
-				tracerProviderBuilder
-						.setSampler(Sampler.traceIdRatioBased(samplerProperties.getProbability()))
-						.setResource(Resource.create(Attributes.of(
-								AttributeKey.stringKey("service.name"), "service-backend"
-						)))
-						.build();
-		return OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).buildAndRegisterGlobal();
-	}
-*/
 	@Bean
 	public RestTemplate restTemplate(OpenTelemetry openTelemetry) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -67,15 +47,6 @@ public class ServiceBackendApplication {
 			ObjectProvider<ContextPropagators> propagatorsProvider,
 			ObjectProvider<List<SpanExporter>> spanExportersProvider) {
 
-		System.out.println("==============");
-		System.out.println("==============");
-		System.out.println("==============");
-		System.out.println("==============");
-		System.out.println("starting");
-		System.out.println("==============");
-		System.out.println("==============");
-		System.out.println("==============");
-		System.out.println("==============");
 		SdkTracerProviderBuilder tracerProviderBuilder = SdkTracerProvider.builder();
 
 		spanExportersProvider.getIfAvailable(Collections::emptyList).stream()
@@ -90,7 +61,6 @@ public class ServiceBackendApplication {
 								.put(ResourceAttributes.SERVICE_NAME, "service-backend")
 								.build())
 						))
-						//.setSampler(Sampler.traceIdRatioBased(samplerProperties.getProbability()))
 						.build();
 
 		ContextPropagators propagators = ContextPropagators.create(
