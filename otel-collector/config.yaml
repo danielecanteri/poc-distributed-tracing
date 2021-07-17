@@ -13,12 +13,19 @@ receivers:
 
 processors:
   batch:
-  span:
+  span/webmvc:
     include:
       match_type: strict
       span_names: ["WebMVCTracingFilter.doFilterInternal"]
     name:
       from_attributes: ["http.url"]
+  span/http:
+    include:
+      match_type: strict
+      span_names: ["HTTP GET", "HTTP POST"]
+    name:
+      from_attributes: ["http.method", "http.url"]
+      separator: " "
 
 exporters:
   opencensus/skywalking:
@@ -38,6 +45,9 @@ exporters:
     endpoint: "http://host.docker.internal:9422/api/v2/spans"
     format: proto
     insecure: true
+  otlp/elastic:
+    endpoint: host.docker.internal:8200
+    insecure: true
 
 service:
   pipelines:
@@ -48,7 +58,12 @@ service:
 #      exporters: [logging, opencensus/skywalking, prometheus]
     traces:
       receivers: [otlp]
-      processors: [batch, span]
-      exporters: [jaeger, zipkin, zipkin/skywalking]
+      processors: [batch, span/webmvc, span/http]
+      exporters: [
+          jaeger,
+          zipkin,
+          zipkin/skywalking,
+          otlp/elastic
+      ]
 #      exporters: [jaeger, zipkin, zipkin/skywalking]
 #      exporters: [logging, opencensus/skywalking, zipkin]
