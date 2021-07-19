@@ -1,0 +1,18 @@
+version: "3.9"
+services: 
+    skywalking-oap:
+        image: 'apache/skywalking-oap-server:8.6.0-es7'
+        ports: 
+            - 11800:11800
+            - 12800:12800
+            - 9411:9411
+        environment: 
+            - SW_STORAGE=elasticsearch7
+            - SW_STORAGE_ES_CLUSTER_NODES=host.docker.internal:9200
+    skywalking-ui:
+        image: 'apache/skywalking-ui:8.6.0'
+        ports: 
+            - 8585:8080
+        environment: 
+            - SW_OAP_ADDRESS=skywalking-oap:12800
+            
