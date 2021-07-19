@@ -1,12 +1,12 @@
 # Moduli
-- elastic7 **docker**
+- elastic7 **docker** http://localhost:5601/
 - jaeger **docker** http://localhost:16686/
 - otel-collector **docker**
 - prometheus **docker**
 - service-backend
 - service-db
 - service-poller
-- skywalking
+- skywalking **docker** http://localhost:8585/
 - splunk **docker** http://localhost:8000
 - zipkin **docker** http://localhost:9411/zipkin/
 
@@ -18,7 +18,11 @@ I moduli service-backend, service-db, service-poller sono i progetti di test che
 service-poller effettua delle chiamate schedulate verso service-backend e service-db, 
 service-backend a sua volta quando riceve una chiamata, invoca service-db
 
-otel-collector raccoglie le tracce degli instrumentatori e agent otel, le converte nei formati dei vari visualizzatori e le spedisce ad ogni visualizzatore
+otel-collector raccoglie le tracce degli instrumentatori e agent otel e le spedisce ad ogni visualizzatore
+
+è configurato tramite [otel-collector/config.yaml](otel-collector/config.yaml) 
+- processors: effettua modifiche custom sui tag 
+- exporters: converte le tracce nei formati dei vari visualizzatori e definisce come inviarle ad ogni visualizzatore
 
 ## Instrumentazione
 
