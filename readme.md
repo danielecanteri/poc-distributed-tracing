@@ -2,7 +2,7 @@
 - elastic7 **docker** http://localhost:5601/
 - jaeger **docker** http://localhost:16686/
 - otel-collector **docker**
-- prometheus **docker**
+- prometheus **docker** http://localhost:9090
 - service-backend
 - service-db
 - service-poller
