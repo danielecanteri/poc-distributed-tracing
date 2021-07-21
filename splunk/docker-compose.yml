@@ -1,6 +1,7 @@
 version: "3.9"
-services: 
+services:
     splunk:
+        # docker run -p 8000:8000 -e "SPLUNK_PASSWORD=<password>" -e "SPLUNK_START_ARGS=--accept-license" -it splunk/splunk:latest
         image: 'splunk/splunk:latest'
         ports:
             - 8000:8000 # ui
@@ -8,7 +9,22 @@ services:
         environment:
             - SPLUNK_START_ARGS=--accept-license
             - SPLUNK_PASSWORD=pocTracing.1
-    # docker run -p 8000:8000 -e "SPLUNK_PASSWORD=<password>" -e "SPLUNK_START_ARGS=--accept-license" -it splunk/splunk:latest
 
-#    splunk-otel-collector: # nome servizio da usare all'interno del container
+    splunk-otel-collector:
+        # docker run --rm -e SPLUNK_ACCESS_TOKEN=12345 -e SPLUNK_REALM=us0 -p 13133:13133 -p 14250:14250 -p 14268:14268 -p 4317:4317 -p 6060:6060 -p 8888:8888 -p 9080:9080 -p 9411:9411 -p 9943:9943 --name otelcol quay.io/signalfx/splunk-otel-collector:latest
+        # --rm necessario?
+        image: 'quay.io/signalfx/splunk-otel-collector:latest'
+        ports:
+            - 13133:13133
+            - 14250:14250
+            - 14268:14268
+            - 4317:4317
+            - 6060:6060
+            - 8888:8888
+            - 9080:9080
+            - 9411:9411
+            - 9943:9943
+        environment:
+            - SPLUNK_ACCESS_TOKEN=12345
+            - SPLUNK_REALM=us0
 
