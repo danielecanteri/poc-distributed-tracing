@@ -1,0 +1,27 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+
+exporters:
+  splunk_hec:
+    endpoint: "https://splunk:8088/services/collector"
+
+service:
+  pipelines:
+#    metrics:
+    #     receivers: [otlp, hostmetrics, prometheus]
+    #      processors: [batch]
+    #      exporters: [
+    #          prometheus
+    #      ]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [
+          splunk_hec
+      ]
