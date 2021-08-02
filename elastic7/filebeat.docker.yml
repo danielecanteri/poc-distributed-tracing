@@ -1,0 +1,20 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /logs/*.log
+    exclude_lines: ['^[[:space:]]*$']
+    multiline:
+      pattern: '^\d{4}'
+      negate: true
+      match: after
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+#output.console:
+#  enabled: true
+
+filebeat.config.inputs:
+  reload.enabled: true
+  reload.period: 10s

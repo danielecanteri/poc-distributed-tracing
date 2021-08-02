@@ -7,3 +7,9 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: password
+
+logging:
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSSXXX} %5p --- [%t] [trace_id=%X{trace_id}] [span_id=%X{span_id}] %-40.40c{1.} : %m%n%xwEx'
+  file:
+    name: logs/db.log

@@ -41,6 +41,23 @@ services:
     networks:
       - elastic
 
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.13.3
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
+      - ../logs:/logs:ro
+    networks:
+      - elastic
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.13.4
+    volumes:
+      - ./logstash.docker.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash.docker.yml://usr/share/logstash/config/logstash.yml
+    networks:
+      - elastic
+
 volumes:
   data01:
     driver: local
